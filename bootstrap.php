@@ -11,7 +11,7 @@
 
 defined('ABSPATH') or die("Cannot access pages directly.");
 
-if (!function_exists("cfw_get_show_view")):
+if (!function_exists("fivets_get_show_view")):
 	/**
 	 * Controller.
 	 * 
@@ -20,20 +20,20 @@ if (!function_exists("cfw_get_show_view")):
 	 * 
 	 * @param string $name
 	 */
-	function cfw_get_show_view( $name = null )
+	function fivets_get_show_view( $name = null )
 	{
 		//initializing variables
 		$paths = set_controller_path();
 		$theme = get_theme_path();
 		$html = '';
 		
-		if (!($view = cfw_find(array($theme), "views".DS.$name.".php")))
+		if (!($view = fivets_find(array($theme), "views".DS.$name.".php")))
 		{
-			$view = cfw_find($paths, "views".DS.$name.".php");
+			$view = fivets_find($paths, "views".DS.$name.".php");
 		}
-		if (!($model = cfw_find(array($theme), "models".DS.$name.".php")))
+		if (!($model = fivets_find(array($theme), "models".DS.$name.".php")))
 		{
-			$model = cfw_find($paths, "models".DS.$name.".php");
+			$model = fivets_find($paths, "models".DS.$name.".php");
 		}
 		
 		if (is_null($name)) return false;
@@ -66,20 +66,20 @@ if (!function_exists("cfw_get_show_view")):
 	}
 endif;
 
-if (!function_exists("cfw_show_view")):
+if (!function_exists("fivets_show_view")):
 	/**
-	 * Function prints out the cfw_get_show_view()
+	 * Function prints out the fivets_get_show_view()
 	 * 
 	 * @param string $name
-	 * @see cfw_get_show_view
+	 * @see fivets_get_show_view
 	 */
-	function cfw_show_view( $name = null )
+	function fivets_show_view( $name = null )
 	{
-		echo cfw_get_show_view($name);
+		echo fivets_get_show_view($name);
 	}
 endif;
 
-if (!function_exists("cfw_show_ajax")):
+if (!function_exists("fivets_show_ajax")):
 	
 	/**
 	 * Show the Ajax
@@ -89,7 +89,7 @@ if (!function_exists("cfw_show_ajax")):
 	 * 
 	 * 
 	 */
-	function cfw_show_ajax() 
+	function fivets_show_ajax() 
 	{
 		if(!isset($_REQUEST['view']) || empty($_REQUEST['view'])) return false;
 		
@@ -97,7 +97,7 @@ if (!function_exists("cfw_show_ajax")):
 		$functions = get_theme_root()."/".get_option('template').'/functions.php';
 		if (file_exists($functions)) require_once $functions;
 		
-		$html = cfw_get_show_view( $_REQUEST['view'] );
+		$html = fivets_get_show_view( $_REQUEST['view'] );
 		
 		if (strlen(trim($html))>0)
 		{
@@ -109,10 +109,10 @@ endif;
 
 if (!function_exists("set_controller_path")):
 	/**
-	 * Function prints out the cfw_get_show_view()
+	 * Function prints out the fivets_get_show_view()
 	 * 
 	 * @param string $name
-	 * @see cfw_get_show_view
+	 * @see fivets_get_show_view
 	 */
 	function set_controller_path( $name = null )
 	{
@@ -154,7 +154,7 @@ endif;
 	 * @return	mixed	The full path and file name for the target file, or boolean false if the file is not found in any of the paths.
 	 * @since	1.5
 	 */
-	function cfw_find($paths, $file)
+	function fivets_find($paths, $file)
 	{
 		settype($paths, 'array'); //force to array
 		
@@ -840,7 +840,7 @@ if (!class_exists("Multiple_Widget_Master")):
 	 */
 	function Multiple_Widget_Master( $widget )
 	{
-		$this->widget = apply_filters('cfw_widget_setup', $widget);
+		$this->widget = apply_filters('fivets_widget_setup', $widget);
 		$widget_ops = array(
 			'classname' => $this->widget['classname'], 
 			'description' => $this->widget['description'] 
@@ -869,8 +869,8 @@ if (!class_exists("Multiple_Widget_Master")):
 			'params' => $instance,
 		);
 		
-		$show_view = apply_filters('cfw_widget_view', $this->widget['show_view'], $widget, $instance, $args);
-		echo cfw_get_show_view($show_view, $args);
+		$show_view = apply_filters('fivets_widget_view', $this->widget['show_view'], $widget, $instance, $args);
+		echo fivets_get_show_view($show_view, $args);
 	}
 	
 	/**
@@ -897,7 +897,7 @@ if (!class_exists("Multiple_Widget_Master")):
 	{
 		//reasons to fail
 		if (empty($this->widget['fields'])) return false;
-		do_action('cfw_widget_before');
+		do_action('fivets_widget_before');
 		
 		$defaults = array(
 			'id' => '',
@@ -925,15 +925,15 @@ if (!class_exists("Multiple_Widget_Master")):
 			switch ($field['type'])
 			{
 				case 'text':
-					echo '<input type="text" name="', $this->get_field_name($field['id']), '" id="', $this->get_field_id($field['id']), '" value="', $meta ? $meta : $field['std'], '" class="cfw_text" />', 
+					echo '<input type="text" name="', $this->get_field_name($field['id']), '" id="', $this->get_field_id($field['id']), '" value="', $meta ? $meta : $field['std'], '" class="fivets_text" />', 
 					'<br/><span class="description">', $field['desc'], '</span>';
 					break;
 				case 'textarea':
-					echo '<textarea class="cfw_textarea" name="', $this->get_field_name($field['id']), '" id="', $this->get_field_id($field['id']), '" cols="60" rows="4" style="width:97%">', $meta ? $meta : $field['std'], '</textarea>', 
+					echo '<textarea class="fivets_textarea" name="', $this->get_field_name($field['id']), '" id="', $this->get_field_id($field['id']), '" cols="60" rows="4" style="width:97%">', $meta ? $meta : $field['std'], '</textarea>', 
 					'<br/><span class="description">', $field['desc'], '</span>';
 					break;
 				case 'select':
-					echo '<select class="cfw_select" name="', $this->get_field_name($field['id']), '" id="', $this->get_field_id($field['id']), '">';
+					echo '<select class="fivets_select" name="', $this->get_field_name($field['id']), '" id="', $this->get_field_id($field['id']), '">';
 					foreach ($field['options'] as $option)
 					{
 						echo '<option', $meta == $option ? ' selected="selected"' : '', '>', $option, '</option>';
@@ -944,14 +944,14 @@ if (!class_exists("Multiple_Widget_Master")):
 				case 'radio':
 					foreach ($field['options'] as $option)
 					{
-						echo '<input class="cfw_radio" type="radio" name="', $this->get_field_name($field['id']), '" value="', $option['value'], '"', $meta == $option['value'] ? ' checked="checked"' : '', ' />', 
+						echo '<input class="fivets_radio" type="radio" name="', $this->get_field_name($field['id']), '" value="', $option['value'], '"', $meta == $option['value'] ? ' checked="checked"' : '', ' />', 
 						$option['name'];
 					}
 					echo '<br/><span class="description">', $field['desc'], '</span>';
 					break;
 				case 'checkbox':
 					echo '<input type="hidden" name="', $this->get_field_name($field['id']), '" id="', $this->get_field_id($field['id']), '" /> ', 
-						 '<input class="cfw_checkbox" type="checkbox" name="', $this->get_field_name($field['id']), '" id="', $this->get_field_id($field['id']), '"', $meta ? ' checked="checked"' : '', ' /> ', 
+						 '<input class="fivets_checkbox" type="checkbox" name="', $this->get_field_name($field['id']), '" id="', $this->get_field_id($field['id']), '"', $meta ? ' checked="checked"' : '', ' /> ', 
 					'<br/><span class="description">', $field['desc'], '</span>';
 					break;
 				case 'custom':
@@ -976,7 +976,7 @@ if (!class_exists("Multiple_Widget_Master")):
 				echo '</label></p>';
 			}
 		}
-		do_action('cfw_widget_after');
+		do_action('fivets_widget_after');
 		return;
 	}
 	
@@ -984,14 +984,14 @@ if (!class_exists("Multiple_Widget_Master")):
 	
 endif;
 
-if (!function_exists('cfw_read_520_rss')):
-	function cfw_read_520_rss()
+if (!function_exists('fivets_read_520_rss')):
+	function fivets_read_520_rss()
 	{
 		//reasons to fail
 		if (isset($GLOBALS['TWCAUTH']) && $GLOBALS['TWCAUTH']) return false;
 		if (!$contents = @file_get_contents("http://community.5twentystudios.com/?cat=14&feed=rss2")) return false;
 		if (!$xml = @simplexml_load_string(trim($contents))) return false;
-		$msgs = get_option('cfw_hide_messages',array());
+		$msgs = get_option('fivets_hide_messages',array());
 		
 		foreach ($xml->channel->item as $item)
 		{
@@ -1001,7 +1001,7 @@ if (!function_exists('cfw_read_520_rss')):
 			$id = preg_replace('/^.*=/', '', $item->guid);
 			if (in_array($id, $msgs)) continue;
 			
-			cfw_notification($item->title.'</p><p>'.$item->description, $id);
+			fivets_notification($item->title.'</p><p>'.$item->description, $id);
 		}
 	}
 endif;
@@ -1010,10 +1010,10 @@ endif;
  * Displays this notification message
  *
  */
-function cfw_notification( $message, $id )
+function fivets_notification( $message, $id )
 {
 	echo '<div id="message" class="message'.$id.' updated below-h2">'
-	.'<a href="javascript:cfw_hide_messages(\''.$id.'\');return false;" class="cfw_checkmark"></a>'
+	.'<a href="javascript:fivets_hide_messages(\''.$id.'\');return false;" class="fivets_checkmark"></a>'
 	.'<p>'.$message.'</p></div>';
 }
 
@@ -1021,10 +1021,10 @@ function cfw_notification( $message, $id )
  * Displays this error message
  *
  */
-function cfw_message( $message, $id )
+function fivets_message( $message, $id )
 {
 	echo '<div id="message" class="message'.$id.' error">'
-	.'<a href="javascript:cfw_hide_messages(\''.$id.'\');return false;" class="cfw_checkmark"></a>'
+	.'<a href="javascript:fivets_hide_messages(\''.$id.'\');return false;" class="fivets_checkmark"></a>'
 	.'<p>'.$message.'</p></div>';
 }
 

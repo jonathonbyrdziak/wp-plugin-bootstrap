@@ -15,10 +15,10 @@
  * 
  */
 jQuery.noConflict();
-var cfw;
+var my_plugin;
 
 (function($) {
-	var api = cfw = {
+	var api = my_plugin = {
 			
 		/**
 		 * Method is fired upon document.ready
@@ -46,6 +46,6 @@ var cfw;
 	};
 
 	//firing the initialization class
-	$(document).ready(function($){ cfw.init(); });
+	$(document).ready(function($){ my_plugin.init(); });
 
 })(jQuery);
